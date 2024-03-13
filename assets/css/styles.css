@@ -182,12 +182,10 @@ a.btn:hover {
   max-width: 950px;
   margin: 0 auto;
 }
-.profile ul{
-  list-style-type: none; /* Remove default bullet points */
-  padding-left: 0; /* Remove default padding */
+
+.profile {
+  text-align: center;
 }
-
-
 .profile ul li:before {
   content: "*  "; /* Add custom bullet point */
   padding-right: 5px; /* Add some space between bullet point and text */
