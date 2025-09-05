@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        // Scroll progress and active section tracking
+        document.addEventListener('DOMContentLoaded', function() {
+            const progress = document.getElementById('progress');
+            const sections = ['hero', 'experience', 'projects', 'technologies', 'achievements', 'contact'];
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            function updateProgress() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                progress.style.width = `${scrollPercent}%`;
+                
+                // Update active section
+                const currentSection = sections.find(section => {
+                    const element = document.getElementById(section);
+                    if (element) {
+                        const rect = element.getBoundingClientRect();
+                        return rect.top <= 100 && rect.bottom >= 100;
+                    }
+                    return false;
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('text-white', 'border-white');
+                    link.classList.add('text-blue-100');
+                    if (link.getAttribute('data-section') === currentSection) {
+                        link.classList.remove('text-blue-100');
+                        link.classList.add('text-white', 'border-b-2', 'border-white');
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', updateProgress);
+            updateProgress();
+            
+            // Smooth scrolling for navigation
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = this.getAttribute('data-section');
+                    document.getElementById(target).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Mobile menu toggle
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            menuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+    </script>
+    <style>
+        .progress-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #2563eb);
+            transition: width 0.1s ease;
+        }
+        
+        .project-card:hover, .experience-card:hover, .tech-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .achievement-card {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <!-- Progress Bar -->
+    <div class="fixed top-0 left-0 w-full bg-gray-200 z-50">
+        <div id="progress" class="progress-bar"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-gradient-to-r from-blue-600 to-blue-800 shadow-lg z-40">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-2xl font-bold text-white">
+                    Portfolio
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex space-x-8">
+                    <button data-section="hero" class="nav-link capitalize text-blue-100 hover:text-white transition-colors duration-200">Home</button>
+                    <button data-section="experience" class="nav-link capitalize text-blue-100 hover:text-white transition-colors duration-200">Experience</button>
+                    <button data-section="projects" class="nav-link capitalize text-blue-100 hover:text-white transition-colors duration-200">Projects</button>
+                    <button data-section="technologies" class="nav-link capitalize text-blue-100 hover:text-white transition-colors duration-200">Technologies</button>
+                    <button data-section="achievements" class="nav-link capitalize text-blue-100 hover:text-white transition-colors duration-200">Achievements</button>
+                    <button data-section="contact" class="nav-link capitalize text-blue-100 hover:text-white transition-colors duration-200">Contact</button>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <button id="menu-button" class="md:hidden text-white">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="md:hidden mt-4 bg-blue-700 rounded-lg p-4 hidden">
+                <div class="flex flex-col space-y-4">
+                    <button data-section="hero" class="nav-link text-left text-blue-100 hover:text-white transition-colors duration-200">Home</button>
+                    <button data-section="experience" class="nav-link text-left text-blue-100 hover:text-white transition-colors duration-200">Experience</button>
+                    <button data-section="projects" class="nav-link text-left text-blue-100 hover:text-white transition-colors duration-200">Projects</button>
+                    <button data-section="technologies" class="nav-link text-left text-blue-100 hover:text-white transition-colors duration-200">Technologies</button>
+                    <button data-section="achievements" class="nav-link text-left text-blue-100 hover:text-white transition-colors duration-200">Achievements</button>
+                    <button data-section="contact" class="nav-link text-left text-blue-100 hover:text-white transition-colors duration-200">Contact</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="min-h-screen flex items-center justify-center px-6 pt-20">
+        <div class="max-w-6xl mx-auto text-center">
+            <div class="mb-8">
+                <h1 class="text-6xl md:text-8xl font-bold mb-6 gradient-text">
+                    Welcome
+                </h1>
+                <p class="text-2xl md:text-3xl text-gray-600 mb-8 leading-relaxed">
+                    Hey there, Recruiter! 👋 You've just landed on the portfolio of a developer who turns coffee into clean code and complex problems into elegant solutions. 
+                    <br />I'm proficient in AI-powered development tools like GitHub Copilot, Cursor, and other AI coding assistants that enhance productivity and code quality.
+                    <br />Scroll down to see how I've engineered systems that scale, perform, and actually work in production.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 mt-16">
+                <div class="bg-white rounded-2xl p-8 border border-gray-200 hover:shadow-lg transition-all duration-300 project-card">
+                    <div class="text-4xl font-bold text-blue-600 mb-2">4+</div>
+                    <div class="text-gray-600">Years of Experience</div>
+                </div>
+                <div class="bg-white rounded-2xl p-8 border border-gray-200 hover:shadow-lg transition-all duration-300 project-card">
+                    <div class="text-4xl font-bold text-blue-600 mb-2">15K+</div>
+                    <div class="text-gray-600">Users Impacted</div>
+                </div>
+                <div class="bg-white rounded-2xl p-8 border border-gray-200 hover:shadow-lg transition-all duration-300 project-card">
+                    <div class="text-4xl font-bold text-blue-600 mb-2">99.9%</div>
+                    <div class="text-gray-600">Uptime Achieved</div>
+                </div>
+            </div>
+
+            <button data-section="experience" class="nav-link mt-16 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                Explore My Journey
+            </button>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl font-bold text-center mb-16 text-gray-900">
+                Professional Experience
+            </h2>
+            
+            <div class="space-y-12">
+                <!-- Google by GlobalLogic -->
+                <div class="bg-white rounded-3xl p-8 border border-gray-200 hover:shadow-xl transition-all duration-300 experience-card">
+                    <div class="flex flex-col md:flex-row items-start gap-6">
+                        <img src="https://placehold.co/80x80/4285F4/FFFFFF?text=GO" alt="Google" class="w-20 h-20 rounded-xl flex-shrink-0">
+                        <div class="flex-1">
+                            <div class="flex flex-col md:flex-row md:items-center gap-4 mb-4">
+                                <h3 class="text-2xl font-bold text-blue-600">Google by GlobalLogic</h3>
+                                <span class="text-gray-600">Software Developer</span>
+                                <span class="text-gray-500 text-sm bg-gray-100 px-3 py-1 rounded-full">Apr 2024 – May 2025</span>
+                            </div>
+                            
+                            <div class="grid md:grid-cols-2 gap-6 mt-6">
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 mb-3">Key Achievements:</h4>
+                                    <ul class="space-y-2">
+                                        <li class="text-gray-600 flex items-start">
+                                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                                            Led full SDLC for full-stack applications serving 3,500+ internal users across global teams
+                                        </li>
+                                        <li class="text-gray-600 flex items-start">
+                                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                                            Architected and automated CI/CD pipelines using GitHub Actions and Argo CD, reducing deployment time from hours to under 5 minutes
+                                        </li>
+                                        <li class="text-gray-600 flex items-start">
+                                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                                            Designed microservices architecture deployed on AWS EKS (Kubernetes), achieving 99.9% uptime and scaling to handle 3x traffic spikes
+                                        </li>
+                                        <li class="text-gray-600 flex items-start">
+                                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                                            Automated infrastructure provisioning using Terraform and Ansible, reducing manual setup time by 70%
+                                        </li>
+                                        <li class="text-gray-600 flex items-start">
+                                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                                            Implemented observability stack with Prometheus, Grafana, and AWS CloudWatch for real-time monitoring and alerting
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 mb-3">Technologies Used:</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">Django</span>
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">React</span>
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">AWS EKS</span>
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">Terraform</span>
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">Argo CD</span>
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">Prometheus</span>
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">Kafka</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Applied Informatics -->
+                <div class="bg-white rounded-3xl p-8 border border-gray-200 hover:shadow-xl transition-all duration-300 experience-card">
+                    <div class="flex flex-col md:flex-row items-start gap-6">
+                        <img src="https://placehold.co/80x80/007ACC/FFFFFF?text=AI" alt="Applied Informatics" class="w-20 h-20 rounded-xl flex-shrink-0">
+                        <div class="flex-1">
+                            <div class="flex flex-col md:flex-row md:items-center gap-4 mb-4">
+                                <h3 class="text-2xl font-bold text-blue-600">Applied Informatics</h3>
+                                <span class="text-gray-600">DevOps Software Developer</span>
+                                <span class="text-gray-500 text-sm bg-gray-100 px-3 py-1 rounded-full">May 2022 – Apr 2024</span>
+                            </div>
+                            
+                            <div class="grid md:grid-cols-2 gap-6 mt-6">
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 mb-3">Key Achievements:</h4>
+                                    <ul class="space-y-2">
+                                        <li class="text-gray-600 flex items-start">
+                                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                                            Developed and maintained full-stack healthcare e-commerce platform supporting 20,000+ daily active users
+                                        </li>
+                                        <li class="text-gray-600 flex items-start">
+                                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                                            Migrated monolithic architecture to microservices using Docker and Kubernetes, increasing deployment efficiency by 50%
+                                        </li>
+                                        <li class="text-gray-600 flex items-start">
+                                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                                            Integrated RabbitMQ and Kafka for asynchronous processing, improving system throughput by 35%
+                                        </li>
+                                        <li class="text-gray-600 flex items-start">
+                                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                                            Implemented zero-downtime deployment strategies including blue-green and canary deployments
+                                        </li>
+                                        <li class="text-gray-600 flex items-start">
+                                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                                            Automated Linux server management through shell scripting, reducing manual operations by 60%
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 mb-3">Technologies Used:</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">Django</span>
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">Kubernetes</span>
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">Kafka</span>
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">RabbitMQ</span>
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">Shell Script</span>
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">Docker</span>
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">Jenkins</span>
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">AWS</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EbizzInfotech -->
+                <div class="bg-white rounded-3xl p-8 border border-gray-200 hover:shadow-xl transition-all duration-300 experience-card">
+                    <div class="flex flex-col md:flex-row items-start gap-6">
+                        <img src="https://placehold.co/80x80/FF6B35/FFFFFF?text=EB" alt="EbizzInfotech" class="w-20 h-20 rounded-xl flex-shrink-0">
+                        <div class="flex-1">
+                            <div class="flex flex-col md:flex-row md:items-center gap-4 mb-4">
+                                <h3 class="text-2xl font-bold text-blue-600">EbizzInfotech</h3>
+                                <span class="text-gray-600">Junior Software Developer</span>
+                                <span class="text-gray-500 text-sm bg-gray-100 px-3 py-1 rounded-full">Sep 2020 – Jul 2021</span>
+                            </div>
+                            
+                            <div class="grid md:grid-cols-2 gap-6 mt-6">
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 mb-3">Key Achievements:</h4>
+                                    <ul class="space-y-2">
+                                        <li class="text-gray-600 flex items-start">
+                                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                                            Developed Python applications using Django and Flask frameworks following full SDLC principles
+                                        </li>
+                                        <li class="text-gray-600 flex items-start">
+                                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                                            Designed backend services for gaming and e-commerce platforms with Express.js REST APIs
+                                        </li>
+                                        <li class="text-gray-600 flex items-start">
+                                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                                            Containerized applications using Docker and orchestrated deployments with Kubernetes
+                                        </li>
+                                        <li class="text-gray-600 flex items-start">
+                                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                                            Built Kafka producers for reliable event-driven processing in shopping cart and checkout workflows
+                                        </li>
+                                        <li class="text-gray-600 flex items-start">
+                                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                                            Optimized database queries and backend processes, improving application performance by 40%
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 mb-3">Technologies Used:</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">Django</span>
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">Flask</span>
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">Express.js</span>
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">Kafka</span>
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">Docker</span>
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">Kubernetes</span>
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">Jenkins</span>
+                                        <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-200">MongoDB</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 px-6 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl font-bold text-center mb-16 text-gray-900">
+                Featured Projects
+            </h2>
+            
+            <div class="space-y-16">
+                <!-- Google AI Training Platform -->
+                <div class="bg-white rounded-3xl overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 project-card">
+                    <div class="md:flex">
+                        <div class="md:w-1/2">
+                            <img src="https://placehold.co/600x400/4285F4/FFFFFF?text=Google+AI+Platform" alt="Google AI Training Platform" class="w-full h-64 md:h-full object-cover">
+                        </div>
+                        <div class="md:w-1/2 p-8">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded-full">Google</span>
+                                <span class="text-gray-500">2024 - 2025</span>
+                            </div>
+                            
+                            <h3 class="text-3xl font-bold text-blue-600 mb-2">Google AI Training Platform - Alchemist</h3>
+                            <p class="text-gray-600 mb-4 leading-relaxed">A cutting-edge AI training platform designed to democratize machine learning education and empower developers with hands-on experience in deep learning, natural language processing, and computer vision.</p>
+                            <p class="text-gray-500 mb-6"><strong>Role:</strong> Lead Full-Stack Developer & DevOps Engineer</p>
+                            
+                            <div class="mb-6">
+                                <h4 class="font-semibold text-gray-800 mb-3">Key Responsibilities:</h4>
+                                <ul class="space-y-2">
+                                    <li class="text-gray-600 flex items-start text-sm">
+                                        <span class="text-blue-600 mr-2 mt-1">•</span>
+                                        Architected and implemented end-to-end CI/CD pipeline using GitHub Actions and Argo CD for automated deployments across staging and production environments
+                                    </li>
+                                    <li class="text-gray-600 flex items-start text-sm">
+                                        <span class="text-blue-600 mr-2 mt-1">•</span>
+                                        Designed and managed Kubernetes (EKS) clusters on AWS to ensure high availability and auto-scaling capabilities
+                                    </li>
+                                    <li class="text-gray-600 flex items-start text-sm">
+                                        <span class="text-blue-600 mr-2 mt-1">•</span>
+                                        Developed secure RESTful APIs using Django with JWT authentication and OAuth2 integration for user management
+                                    </li>
+                                    <li class="text-gray-600 flex items-start text-sm">
+                                        <span class="text-blue-600 mr-2 mt-1">•</span>
+                                        Implemented infrastructure as code (IaC) using Terraform to provision AWS resources including EC2, S3, RDS, and VPC configurations
+                                    </li>
+                                    <li class="text-gray-600 flex items-start text-sm">
+                                        <span class="text-blue-600 mr-2 mt-1">•</span>
+                                        Automated configuration management with Ansible playbooks for consistent environment setup across development, testing, and production
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h4 class="font-semibold text-gray-800 mb-3">Technologies:</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">AWS</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Kubernetes</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Terraform</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Ansible</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">GitHub Actions</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Argo CD</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Django</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">React</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Prometheus</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Redis</span>
+                                </div>
+                            </div>
+                            
+                            <p class="text-green-600 text-sm italic">"The platform successfully trained over 15,000 developers globally, achieving 99.95% uptime and handling peak loads of 5,000 concurrent users during major training events."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Healthcare E-Commerce Platform -->
+                <div class="bg-white rounded-3xl overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 project-card">
+                    <div class="md:flex">
+                        <div class="md:w-1/2">
+                            <img src="https://placehold.co/600x400/007ACC/FFFFFF?text=Healthcare+E-Commerce" alt="Healthcare E-Commerce Platform" class="w-full h-64 md:h-full object-cover">
+                        </div>
+                        <div class="md:w-1/2 p-8">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded-full">Applied Informatics</span>
+                                <span class="text-gray-500">2022 - 2024</span>
+                            </div>
+                            
+                            <h3 class="text-3xl font-bold text-blue-600 mb-2">Healthcare E-Commerce Platform (BlinkHealth Clone)</h3>
+                            <p class="text-gray-600 mb-4 leading-relaxed">A HIPAA-compliant healthcare e-commerce platform enabling patients to order prescription medications online with insurance integration, similar to BlinkHealth.com, serving thousands of users daily.</p>
+                            <p class="text-gray-500 mb-6"><strong>Role:</strong> Full-Stack Developer & DevOps Specialist</p>
+                            
+                            <div class="mb-6">
+                                <h4 class="font-semibold text-gray-800 mb-3">Key Responsibilities:</h4>
+                                <ul class="space-y-2">
+                                    <li class="text-gray-600 flex items-start text-sm">
+                                        <span class="text-blue-600 mr-2 mt-1">•</span>
+                                        Led the migration from monolithic architecture to microservices using Docker containers orchestrated by Kubernetes
+                                    </li>
+                                    <li class="text-gray-600 flex items-start text-sm">
+                                        <span class="text-blue-600 mr-2 mt-1">•</span>
+                                        Designed and implemented RESTful APIs with Django and Node.js (Express) for user authentication, prescription management, and payment processing
+                                    </li>
+                                    <li class="text-gray-600 flex items-start text-sm">
+                                        <span class="text-blue-600 mr-2 mt-1">•</span>
+                                        Integrated Kafka message queues for asynchronous order processing and inventory updates, improving system throughput by 35%
+                                    </li>
+                                    <li class="text-gray-600 flex items-start text-sm">
+                                        <span class="text-blue-600 mr-2 mt-1">•</span>
+                                        Implemented zero-downtime deployment strategies using blue-green deployments and canary releases
+                                    </li>
+                                    <li class="text-gray-600 flex items-start text-sm">
+                                        <span class="text-blue-600 mr-2 mt-1">•</span>
+                                        Secured sensitive healthcare data using HTTPS/TLS encryption, JWT tokens, and RBAC with fine-grained permissions
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h4 class="font-semibold text-gray-800 mb-3">Technologies:</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Django</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Node.js</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Kafka</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">PostgreSQL</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Redis</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Docker</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Kubernetes</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">NGINX</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Shell Script</span>
+                                </div>
+                            </div>
+                            
+                            <p class="text-green-600 text-sm italic">"The platform processed over $2M in monthly transactions with 20,000+ daily active users, maintaining 99.9% uptime and passing all HIPAA compliance audits."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gaming Portal -->
+                <div class="bg-white rounded-3xl overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 project-card">
+                    <div class="md:flex">
+                        <div class="md:w-1/2">
+                            <img src="https://placehold.co/600x400/FF6B35/FFFFFF?text=Gaming+Portal" alt="Gaming Portal" class="w-full h-64 md:h-full object-cover">
+                        </div>
+                        <div class="md:w-1/2 p-8">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded-full">EbizzInfotech</span>
+                                <span class="text-gray-500">2020 - 2021</span>
+                            </div>
+                            
+                            <h3 class="text-3xl font-bold text-blue-600 mb-2">Gaming Portal (CrazyGames Clone)</h3>
+                            <p class="text-gray-600 mb-4 leading-relaxed">A browser-based gaming platform hosting hundreds of HTML5 games with social features, leaderboards, and in-game purchases, similar to CrazyGames.com, targeting casual gamers worldwide.</p>
+                            <p class="text-gray-500 mb-6"><strong>Role:</strong> Backend Developer & DevOps Engineer</p>
+                            
+                            <div class="mb-6">
+                                <h4 class="font-semibold text-gray-800 mb-3">Key Responsibilities:</h4>
+                                <ul class="space-y-2">
+                                    <li class="text-gray-600 flex items-start text-sm">
+                                        <span class="text-blue-600 mr-2 mt-1">•</span>
+                                        Developed scalable backend services using Django and Flask to handle game metadata, user profiles, and achievement systems
+                                    </li>
+                                    <li class="text-gray-600 flex items-start text-sm">
+                                        <span class="text-blue-600 mr-2 mt-1">•</span>
+                                        Built RESTful APIs with Express.js for real-time game state synchronization and multiplayer functionality
+                                    </li>
+                                    <li class="text-gray-600 flex items-start text-sm">
+                                        <span class="text-blue-600 mr-2 mt-1">•</span>
+                                        Containerized applications using Docker and deployed on Kubernetes clusters for easy scaling during traffic spikes
+                                    </li>
+                                    <li class="text-gray-600 flex items-start text-sm">
+                                        <span class="text-blue-600 mr-2 mt-1">•</span>
+                                        Implemented Kafka producers and consumers for reliable event-driven processing of in-game purchases and leaderboard updates
+                                    </li>
+                                    <li class="text-gray-600 flex items-start text-sm">
+                                        <span class="text-blue-600 mr-2 mt-1">•</span>
+                                        Optimized database queries and implemented Redis caching for frequently accessed game data, improving load times by 40%
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h4 class="font-semibold text-gray-800 mb-3">Technologies:</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Django</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Flask</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Express.js</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Kafka</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">MongoDB</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Redis</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Docker</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Kubernetes</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">AWS S3</span>
+                                    <span class="bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs border border-blue-200">Jenkins</span>
+                                </div>
+                            </div>
+                            
+                            <p class="text-green-600 text-sm italic">"The platform reached 500,000 monthly active users with peak concurrency of 10,000 players, achieving sub-200ms response times for game loading."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technologies Section -->
+    <section id="technologies" class="py-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl font-bold text-center mb-16 text-gray-900">
+                Technical Expertise
+            </h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- AWS -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300 tech-card">
+                    <h3 class="text-xl font-bold text-blue-600 mb-4">AWS</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Provisioned and managed EC2 instances for application hosting with auto-scaling groups to handle variable traffic loads
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Configured S3 buckets for secure storage of static assets with lifecycle policies and cross-region replication
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Implemented IAM roles and policies following least-privilege principle for secure access control across services
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Designed VPC architectures with public and private subnets, NAT gateways, and security groups for network isolation
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Utilized AWS RDS for managed PostgreSQL and MySQL databases with automated backups and read replicas
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Deployed applications on AWS EKS (Elastic Kubernetes Service) with cluster autoscaling and node groups
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Azure CI/CD -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300 tech-card">
+                    <h3 class="text-xl font-bold text-blue-600 mb-4">Azure CI/CD</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Designed and implemented Azure DevOps pipelines for continuous integration and delivery of microservices
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Configured multi-stage pipelines with approval gates for development, staging, and production environments
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Integrated automated testing (unit, integration, security) into CI/CD workflows with test result reporting
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Implemented infrastructure deployment as part of release pipelines using ARM templates and Bicep
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Set up artifact repositories for package management and version control of build outputs
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Configured deployment strategies including rolling updates, blue-green, and canary deployments
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Jenkins -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300 tech-card">
+                    <h3 class="text-xl font-bold text-blue-600 mb-4">Jenkins</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Created complex Jenkins pipelines using Groovy DSL for building, testing, and deploying applications
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Configured Jenkins agents on Docker containers for isolated build environments
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Implemented pipeline-as-code with Jenkinsfile stored in version control for auditability
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Set up parameterized builds with dynamic environment selection and deployment targets
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Integrated Jenkins with GitHub webhooks for automatic trigger on code commits
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Developed custom Jenkins plugins for specialized deployment requirements
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Terraform -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300 tech-card">
+                    <h3 class="text-xl font-bold text-blue-600 mb-4">Terraform</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Wrote reusable Terraform modules for provisioning AWS resources including VPC, EKS, RDS, and S3
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Implemented state management with remote backends (S3 + DynamoDB locking) for team collaboration
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Used Terraform workspaces for managing multiple environments (dev, staging, prod) from single codebase
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Created custom modules for complex infrastructure patterns like multi-AZ deployments
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Implemented input validation and output documentation for module interfaces
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Integrated Terraform with CI/CD pipelines for automated infrastructure changes
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Ansible -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300 tech-card">
+                    <h3 class="text-xl font-bold text-blue-600 mb-4">Ansible</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Developed Ansible playbooks for automated server configuration and application deployment
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Created reusable roles for common tasks like user management, package installation, and service configuration
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Implemented dynamic inventory scripts for AWS EC2 instances based on tags and metadata
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Used Ansible Vault for secure management of sensitive configuration data
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Automated configuration of Kubernetes nodes and worker setup with Ansible
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Integrated Ansible with CI/CD pipelines for environment provisioning and updates
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Kubernetes -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300 tech-card">
+                    <h3 class="text-xl font-bold text-blue-600 mb-4">Kubernetes</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Designed and managed EKS clusters with node groups, auto-scaling, and pod disruption budgets
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Created Helm charts for templated deployment of microservices with configurable parameters
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Implemented network policies for pod-to-pod communication restrictions and security
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Configured ingress controllers with NGINX for external access and TLS termination
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Set up horizontal pod autoscalers based on CPU, memory, and custom metrics
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Managed secrets and configMaps for secure configuration management
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Docker -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300 tech-card">
+                    <h3 class="text-xl font-bold text-blue-600 mb-4">Docker</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Created optimized Dockerfiles with multi-stage builds to reduce image size and improve security
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Implemented Docker Compose for local development environment replication
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Configured Docker registries (ECR) for secure image storage and distribution
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Set up Docker security scanning using Trivy and Clair for vulnerability detection
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Optimized container resource limits (CPU, memory) for efficient cluster utilization
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Created base images with common dependencies to standardize application containers
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Github Actions -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300 tech-card">
+                    <h3 class="text-xl font-bold text-blue-600 mb-4">Github Actions</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Designed workflow files for automated testing, building, and deployment of applications
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Created reusable workflow templates for consistent CI/CD across multiple repositories
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Implemented matrix testing for multiple Node.js/Python versions and operating systems
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Set up scheduled workflows for periodic maintenance tasks and security updates
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Integrated code coverage reporting and quality gates in pull request workflows
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Configured deployment environments with required reviewers and approval workflows
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Github Co-pilot -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300 tech-card">
+                    <h3 class="text-xl font-bold text-blue-600 mb-4">Github Co-pilot</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Leveraged AI-powered code suggestions to accelerate development of boilerplate code
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Used Copilot for generating unit test cases and edge case scenarios
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Implemented code documentation and comments generation for improved maintainability
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Accelerated API endpoint development with intelligent code completion
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Generated configuration files (Docker, Kubernetes, Terraform) with context-aware suggestions
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Improved code quality through AI-assisted refactoring recommendations
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- React -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300 tech-card">
+                    <h3 class="text-xl font-bold text-blue-600 mb-4">React</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Developed component-based UI architecture with reusable, testable components
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Implemented state management using Context API and Redux for complex application state
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Created custom hooks for encapsulating common logic and improving code reuse
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Optimized performance through memoization, lazy loading, and code splitting
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Implemented responsive design using CSS-in-JS and media queries
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Integrated React with backend APIs using Axios and WebSocket connections
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Angular -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300 tech-card">
+                    <h3 class="text-xl font-bold text-blue-600 mb-4">Angular</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Developed enterprise-grade applications using Angular's component architecture
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Implemented dependency injection for modular and testable code structure
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Used RxJS observables for reactive programming and async data handling
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Created custom directives and pipes for enhanced UI functionality
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Implemented routing with lazy loading for improved application performance
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Integrated Angular Material for consistent, accessible UI components
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Typescript -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300 tech-card">
+                    <h3 class="text-xl font-bold text-blue-600 mb-4">Typescript</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Enforced type safety across frontend and backend codebases
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Created comprehensive type definitions for API contracts and data models
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Implemented generics for reusable, type-safe utility functions
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Used interfaces and enums for consistent data structure definitions
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Integrated TypeScript with build tools for early error detection
+                        </li>
+                        <li class="text-gray-600 flex items-start">
+                            <span class="text-blue-600 mr-2 mt-1">•</span>
+                            Enforced strict type checking in CI/CD pipelines
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="py-20 px-6 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-5xl font-bold text-center mb-16 text-gray-900">
+                Key Achievements & Impact
+            </h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 border border-blue-200 hover:shadow-md transition-all duration-300 achievement-card">
+                    <div class="text-4xl font-bold text-blue-600 mb-2">70% Faster</div>
+                    <div class="text-gray-600">Infrastructure provisioning time reduced through Terraform and Ansible automation</div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-8 border border-green-200 hover:shadow-md transition-all duration-300 achievement-card">
+                    <div class="text-4xl font-bold text-green-600 mb-2">99.9% Uptime</div>
+                    <div class="text-gray-600">Achieved through robust Kubernetes orchestration and comprehensive monitoring</div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8 border border-purple-200 hover:shadow-md transition-all duration-300 achievement-card">
+                    <div class="text-4xl font-bold text-purple-600 mb-2">3x Growth</div>
+                    <div class="text-gray-600">Scaled systems to handle three times the original traffic load</div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl p-8 border border-orange-200 hover:shadow-md transition-all duration-300 achievement-card">
+                    <div class="text-4xl font-bold text-orange-600 mb-2">50% More Efficient</div>
+                    <div class="text-gray-600">Deployment efficiency improved through microservices migration</div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-pink-50 to-pink-100 rounded-2xl p-8 border border-pink-200 hover:shadow-md transition-all duration-300 achievement-card">
+                    <div class="text-4xl font-bold text-pink-600 mb-2">35% Throughput</div>
+                    <div class="text-gray-600">Increased system throughput via Kafka and RabbitMQ integration</div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-cyan-50 to-cyan-100 rounded-2xl p-8 border border-cyan-200 hover:shadow-md transition-all duration-300 achievement-card">
+                    <div class="text-4xl font-bold text-cyan-600 mb-2">60% Less Effort</div>
+                    <div class="text-gray-600">Manual operations reduced through shell scripting automation</div>
+                </div>
+            </div>
+
+            <div class="mt-16 bg-white rounded-2xl p-8 border border-gray-200">
+                <h3 class="text-2xl font-bold text-center mb-8 text-blue-600">Comprehensive Skill Set</h3>
+                <div class="grid md:grid-cols-4 gap-4 text-center">
+                    <div>
+                        <div class="text-2xl font-bold text-blue-600">Full-Stack</div>
+                        <div class="text-gray-600">Django, React, Node.js</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-green-600">DevOps</div>
+                        <div class="text-gray-600">CI/CD, Kubernetes, Terraform</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-purple-600">Cloud</div>
+                        <div class="text-gray-600">AWS, Azure, GCP</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-orange-600">Data</div>
+                        <div class="text-gray-600">SQL, NoSQL, Kafka</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-5xl font-bold mb-8 text-gray-900">
+                Let's Connect
+            </h2>
+            <p class="text-xl text-gray-600 mb-12 leading-relaxed">
+                Thank you for exploring my comprehensive portfolio. If you're looking for a dedicated professional 
+                with extensive experience in full-stack development, DevOps, and cloud technologies, I'd love to connect.
+            </p>
+            
+            <div class="bg-white rounded-2xl p-8 border border-gray-200 hover:shadow-xl transition-all duration-300">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="text-4xl mb-2 text-blue-600">📧</div>
+                        <div class="font-semibold text-blue-600">Email</div>
+                        <div class="text-gray-600">professional.email@example.com</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl mb-2 text-blue-600">📱</div>
+                        <div class="font-semibold text-blue-600">LinkedIn</div>
+                        <div class="text-gray-600">linkedin.com/in/yourprofile</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl mb-2 text-blue-600">🐙</div>
+                        <div class="font-semibold text-blue-600">GitHub</div>
+                        <div class="text-gray-600">github.com/yourusername</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="mt-12 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                Download Resume
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 px-6 border-t border-gray-200 bg-gray-50">
+        <div class="max-w-7xl mx-auto text-center text-gray-500">
+            <p>© 2025 Portfolio. Built with HTML, Tailwind CSS, and a lot of passion for technology.</p>
+        </div>
+    </footer>
+</body>
+</html>
